@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single" >
+    <item
+        android:id="@+id/feedMenuItem"
+        android:checked="true"
+        android:icon="@drawable/ic_feedback_black_48px"
+        android:title="Лента" />
+    <item
+        android:id="@+id/faseMenuItem"
+        android:checked="true"
+        android:icon="@drawable/ic_face_black_48px"
+        android:title="Подписки" />
+    <item
+        android:id="@+id/settingsMenuItem"
+        android:checked="true"
+        android:icon="@drawable/ic_settings_black_48px"
+        android:title="Настройки" />
+    </group>
+</menu>
