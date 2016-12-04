@@ -11,5 +11,5 @@ public interface SubscribeView  extends MvpView{
 
     void getAllSubscribe(List<Subscribe> subs);
 
-    void onErrorReceived();
+    void onErrorReceived(String s);
 }
