@@ -1,6 +1,10 @@
 package com.example.admin.projectniklas.models;
 
+
+
+
 import java.util.Date;
+
 
 public class News {
 

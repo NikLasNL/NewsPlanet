@@ -8,7 +8,11 @@ import com.arellomobile.mvp.MvpPresenter;
 import com.einmalfel.earl.EarlParser;
 import com.einmalfel.earl.Feed;
 import com.einmalfel.earl.Item;
+import com.example.admin.projectniklas.NewsPlanetApplication;
+import com.example.admin.projectniklas.RssAsyncTask;
 import com.example.admin.projectniklas.models.News;
+import com.example.admin.projectniklas.models.Subscribe;
+import com.example.admin.projectniklas.models.SubscribeDao;
 import com.example.admin.projectniklas.views.NewsView;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -17,52 +21,53 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.zip.DataFormatException;
 
 @InjectViewState
 public class NewsPresenter extends MvpPresenter<NewsView> {
 
+    private SubscribeDao dao = NewsPlanetApplication.getDaoSession().getSubscribeDao();
+
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        String[] urls = {"https://meduza.io/rss/all","https://lenta.ru/rss"};
-        RssAsyncTask task = new RssAsyncTask();
+        String[] urls = getRssUrls();
+        RssAsyncTask task = new RssAsyncTask(new RssAsyncTask.OnPostResultListener() {
+            ArrayList<News>news =new ArrayList();
+            @Override
+            public void onPostExecute(ArrayList<Feed> feeds) {
+                for (Feed feed : feeds) {
+                    for (Item item : feed.getItems()) {
+                        String imgUrl = "placeholder";
+                        if (!item.getEnclosures().isEmpty())
+                            imgUrl = item.getEnclosures().get(0).getLink();
+                        news.add(new News(feed.getTitle(), item.getTitle().trim(), item.getPublicationDate(), imgUrl));
+                    }
+                }
+
+               // Collections.sort(news);
+                getViewState().onDataReceived(news);
+            }
+        });
         task.execute (urls);
+
+
     }
 
-    private class RssAsyncTask extends AsyncTask<String, Void, ArrayList<News>> {
+    private String[] getRssUrls() {
+            ArrayList<String> urls = new ArrayList<>();
+            List<Subscribe> subs = dao.queryBuilder().orderAsc(SubscribeDao.Properties.Name).list();
+            for (Subscribe sub : subs) {
+                urls.add(sub.getUrl());
+            }
+            String[] urlsArr = new String[urls.size()];
+            urlsArr = urls.toArray(urlsArr);
+            return urlsArr;
 
-        @Override
-        protected ArrayList<News> doInBackground(String... strings) {
-            ArrayList<News> news = new ArrayList<>();
-            for (String s : strings)
-                try {
-                    InputStream iStream = new URL(s).openConnection().getInputStream();
-                    Feed feed = EarlParser.parseOrThrow(iStream, 0);
-                    for (Item item : feed.getItems()) {
-                        news.add(new News(feed.getTitle(),item.getTitle().trim(),item.getPublicationDate(),feed.getImageLink()));
-                    }
-
-                } catch (IOException | DataFormatException | XmlPullParserException e) {
-                    return null;
-                }
-            Collections.sort(news, new Comparator<News>() {
-                @Override
-                public int compare(News news, News t1) {
-                    return t1.getDate().compareTo(news.getDate());
-                }
-            });
-            return news;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<News> news) {
-            super.onPostExecute(news);
-            if(news == null) getViewState().onErrorReceived();
-            else getViewState().onDataReceived(news);
-        }
 
     }
 }
