@@ -65,13 +65,12 @@ public class SubscribeFragment extends MvpFragment implements SubscribeView {
     }
 
     @Override
-    public void onErrorReceived() {
+    public void onErrorReceived(String s) {
         Toast.makeText(getActivity().getApplicationContext(), "Ошибка получения данных", Toast.LENGTH_SHORT).show();
     }
 
     private void showDialog() {
         View v = LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.dialog_subscribe, null);
-        final EditText name = (EditText) v.findViewById(R.id.name);
         final EditText url = (EditText) v.findViewById(R.id.url);
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setTitle("Добавить подписку")
@@ -79,7 +78,7 @@ public class SubscribeFragment extends MvpFragment implements SubscribeView {
                 .setPositiveButton("Добавить", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        presenter.saveSubscribe(name.getText().toString(), url.getText().toString());
+                        presenter.saveSubscribe(url.getText().toString());
 
                     }
                 }).setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
