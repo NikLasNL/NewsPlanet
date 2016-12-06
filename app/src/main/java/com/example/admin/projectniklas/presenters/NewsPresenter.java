@@ -1,11 +1,9 @@
 package com.example.admin.projectniklas.presenters;
 
 
-import android.os.AsyncTask;
-
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.einmalfel.earl.EarlParser;
+
 import com.einmalfel.earl.Feed;
 import com.einmalfel.earl.Item;
 import com.example.admin.projectniklas.NewsPlanetApplication;
@@ -15,17 +13,12 @@ import com.example.admin.projectniklas.models.Subscribe;
 import com.example.admin.projectniklas.models.SubscribeDao;
 import com.example.admin.projectniklas.views.NewsView;
 
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.Collections;
-import java.util.Comparator;
+
 import java.util.List;
-import java.util.zip.DataFormatException;
+
 
 @InjectViewState
 public class NewsPresenter extends MvpPresenter<NewsView> {
@@ -37,7 +30,8 @@ public class NewsPresenter extends MvpPresenter<NewsView> {
         super.onFirstViewAttach();
         String[] urls = getRssUrls();
         RssAsyncTask task = new RssAsyncTask(new RssAsyncTask.OnPostResultListener() {
-            ArrayList<News>news =new ArrayList();
+            ArrayList<News> news = new ArrayList();
+
             @Override
             public void onPostExecute(ArrayList<Feed> feeds) {
                 for (Feed feed : feeds) {
@@ -49,24 +43,24 @@ public class NewsPresenter extends MvpPresenter<NewsView> {
                     }
                 }
 
-               // Collections.sort(news);
+                Collections.sort(news);
                 getViewState().onDataReceived(news);
             }
         });
-        task.execute (urls);
+        task.execute(urls);
 
 
     }
 
     private String[] getRssUrls() {
-            ArrayList<String> urls = new ArrayList<>();
-            List<Subscribe> subs = dao.queryBuilder().orderAsc(SubscribeDao.Properties.Name).list();
-            for (Subscribe sub : subs) {
-                urls.add(sub.getUrl());
-            }
-            String[] urlsArr = new String[urls.size()];
-            urlsArr = urls.toArray(urlsArr);
-            return urlsArr;
+        ArrayList<String> urls = new ArrayList<>();
+        List<Subscribe> subs = dao.queryBuilder().orderAsc(SubscribeDao.Properties.Name).list();
+        for (Subscribe sub : subs) {
+            urls.add(sub.getUrl());
+        }
+        String[] urlsArr = new String[urls.size()];
+        urlsArr = urls.toArray(urlsArr);
+        return urlsArr;
 
 
     }

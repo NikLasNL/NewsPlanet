@@ -3,10 +3,11 @@ package com.example.admin.projectniklas.models;
 
 
 
+import java.util.Comparator;
 import java.util.Date;
 
 
-public class News {
+public class News implements Comparable<News>{
 
     private String channel;
     private String news;
@@ -34,6 +35,12 @@ public class News {
 
     public String getLogo() {
         return logo;
+    }
+
+
+    @Override
+    public int compareTo(News news) {
+        return news.getDate().compareTo(getDate());
     }
 }
 
