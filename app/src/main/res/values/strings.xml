@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">NewsPlanet</string>
+    <string-array name="time_zone">
+        <item>GMT-14</item>
+        <item>GMT-13</item>
+        <item>GMT-12</item>
+        <item>GMT-11</item>
+        <item>GMT-10</item>
+        <item>GMT-9</item>
+        <item>GMT-8</item>
+        <item>GMT-7</item>
+        <item>GMT-6</item>
+        <item>GMT-5</item>
+        <item>GMT-4</item>
+        <item>GMT-3</item>
+        <item>GMT-2</item>
+        <item>GMT-1</item>
+        <item>GMT+0</item>
+        <item>GMT+1</item>
+        <item>GMT+2</item>
+        <item>GMT+3</item>
+        <item>GMT+4</item>
+        <item>GMT+5</item>
+        <item>GMT+6</item>
+        <item>GMT+7</item>
+        <item>GMT+8</item>
+        <item>GMT+9</item>
+        <item>GMT+10</item>
+        <item>GMT+11</item>
+        <item>GMT+12</item>
+    </string-array>
 </resources>

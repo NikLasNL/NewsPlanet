@@ -11,11 +11,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NewsViewHolder extends RecyclerView.ViewHolder {
 
+    public View itemView;
     public TextView newsText , channel , date;
     public CircleImageView logo;
 
     public NewsViewHolder(View itemView){
         super(itemView);
+        this.itemView = itemView;
         channel = (TextView) itemView.findViewById(R.id.channel);
         newsText = (TextView) itemView.findViewById(R.id.newsText);
         date = (TextView) itemView.findViewById(R.id.date);
