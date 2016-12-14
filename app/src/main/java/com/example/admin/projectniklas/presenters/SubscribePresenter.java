@@ -52,13 +52,16 @@ public class SubscribePresenter extends MvpPresenter<SubscribeView> {
             @Override
             public void onPostExecute(ArrayList<Feed> feeds) {
                 try {
-                    Subscribe sub = new Subscribe(feeds.get(0).getTitle(),url);
-                    subDao.save(sub);
-                    getSubscribes();
+                    if (!feeds.isEmpty()) {
+                        Subscribe sub = new Subscribe(feeds.get(0).getTitle(), url);
+                        subDao.save(sub);
+                        getSubscribes();
+                    }
+                    else getViewState().onErrorReceived("Неверный URL");
                 }
-                catch (SQLiteConstraintException|NullPointerException e ){
-                    if(e instanceof NullPointerException) getViewState().onErrorReceived("Неверный URL");
-                    else getViewState().onErrorReceived("Такой канал уже добавлен");
+                catch (SQLiteConstraintException e){
+                    getViewState().onErrorReceived("Такой канал уже добавлен");
+
                 }
             }
         });
