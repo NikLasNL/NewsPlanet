@@ -39,7 +39,7 @@ public class NewsPresenter extends MvpPresenter<NewsView> {
                         String imgUrl = "placeholder";
                         if (!item.getEnclosures().isEmpty())
                             imgUrl = item.getEnclosures().get(0).getLink();
-                        news.add(new News(feed.getTitle(), item.getTitle().trim(), item.getPublicationDate(), imgUrl));
+                        news.add(new News(item.getLink(),feed.getTitle(), item.getTitle().trim(), item.getPublicationDate(), imgUrl));
                     }
                 }
 
