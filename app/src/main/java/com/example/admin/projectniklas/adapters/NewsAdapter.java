@@ -45,7 +45,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
     @Override
     public void onBindViewHolder(NewsViewHolder holder, int position) {
 
-        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+3"));
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+0"));
 
         final News news = newsList.get(position);
         holder.date.setText(dateFormat.format(news.getDate()));
