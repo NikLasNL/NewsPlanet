@@ -43,8 +43,11 @@ public class SubscribePresenter extends MvpPresenter<SubscribeView> {
         getViewState().getAllSubscribe(subs);
     }
 
-    public void deleteSubscribe() {
-
+    //Это по поводу удаления подписок.
+    public void deleteSubscribe(String url) {
+        Subscribe sub = subDao.queryBuilder().where(SubscribeDao.Properties.Url.eq(url)).unique();
+        sub.delete();
+        getSubscribes();
     }
 
     private void createTask() {
