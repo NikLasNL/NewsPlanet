@@ -6,11 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpFragment;
@@ -55,8 +57,22 @@ public class SubscribeFragment extends MvpFragment implements SubscribeView {
         });
 
         return fragmentView;
-    }
+        ItemTouchHelper.SimpleCallback swipe = new ItemTouchHelper.SimpleCallback() { //ДОПИСАТЬ \\ ПРОБЛЕМС
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
 
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                TextView url = (TextView) viewHolder.itemView.findViewById(R.id.url);
+                presenter.deleteSubscribe(url.getText().toString());
+
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipe);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
 
     @Override
     public void getAllSubscribe(List<Subscribe> subs) {
