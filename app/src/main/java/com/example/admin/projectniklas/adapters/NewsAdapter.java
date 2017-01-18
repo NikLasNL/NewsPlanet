@@ -2,7 +2,9 @@ package com.example.admin.projectniklas.adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +47,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
     @Override
     public void onBindViewHolder(NewsViewHolder holder, int position) {
 
-        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+3"));
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+0"));
 
         final News news = newsList.get(position);
         holder.date.setText(dateFormat.format(news.getDate()));
@@ -54,6 +56,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
         Picasso.with(context).load(String.valueOf(news.getLogo()))
                 .placeholder(R.drawable.logo_placeholder)
                 .into(holder.logo);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse(news.getWeb());
+                Intent link = new Intent(Intent.ACTION_VIEW,uri);
+                link.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(link);
+            }
+        });
 
 
     }
