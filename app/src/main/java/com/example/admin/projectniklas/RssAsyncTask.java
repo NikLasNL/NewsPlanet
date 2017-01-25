@@ -31,7 +31,7 @@ public class RssAsyncTask extends AsyncTask<String, Void, ArrayList<Feed>> {
                 feeds.add(feed);
 
             } catch (IOException | DataFormatException | XmlPullParserException e) {
-                return null;
+
             }
         return feeds;
     }

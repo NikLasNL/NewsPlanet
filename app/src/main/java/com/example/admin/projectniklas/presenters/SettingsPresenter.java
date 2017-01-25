@@ -16,7 +16,7 @@ public class SettingsPresenter extends MvpPresenter<SettingsView>{
     }
 
     public void setTimeZone(String zone){
-        sp.edit().putString("timezone",zone).apply();
+        sp.edit().putString("timeZone",zone).apply();
     }
 
 }

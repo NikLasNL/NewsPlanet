@@ -32,6 +32,8 @@ public class SettingsFragment extends MvpFragment implements SettingsView {
                 .inflate(R.layout.fragment_settings, container, false);
         getActivity().setTitle("Настройки");
 
+
+
         timeZone = (Spinner) fragmentView.findViewById(R.id.timeZone);
         adapter = ArrayAdapter.createFromResource(getActivity(), R.array.time_zone, android.R.layout.simple_spinner_item);
         timeZone.setAdapter(adapter);
