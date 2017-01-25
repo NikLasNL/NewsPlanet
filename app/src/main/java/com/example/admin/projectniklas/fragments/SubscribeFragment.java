@@ -45,7 +45,7 @@ public class SubscribeFragment extends MvpFragment implements SubscribeView {
         ((StartActivity) getActivity()).checkMenu(R.id.faseMenuItem);
 
         addButton = (Button) fragmentView.findViewById(R.id.addButton);
-        recyclerView = (RecyclerView) fragmentView.findViewById(R.id.recuclerView);
+        recyclerView = (RecyclerView) fragmentView.findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager lm = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(lm);
 
@@ -56,8 +56,7 @@ public class SubscribeFragment extends MvpFragment implements SubscribeView {
             }
         });
 
-        return fragmentView;
-        ItemTouchHelper.SimpleCallback swipe = new ItemTouchHelper.SimpleCallback() { //ДОПИСАТЬ \\ ПРОБЛЕМС
+        ItemTouchHelper.SimpleCallback swipe = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) { //ДОПИСАТЬ \\ ПРОБЛЕМС
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 return false;
@@ -72,6 +71,7 @@ public class SubscribeFragment extends MvpFragment implements SubscribeView {
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipe);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+        return fragmentView;
     }
 
     @Override
