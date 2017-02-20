@@ -28,3 +28,5 @@
 public static java.lang.String TABLENAME;
 }
 -keep class **$Properties
+-dontwarn com.squareup.picasso.**
+-dontwarn org.greenrobot.greendao.**
